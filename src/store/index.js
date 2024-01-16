@@ -1,8 +1,10 @@
 const { configureStore, combineReducers } = require("@reduxjs/toolkit");
-import categoryReducer from '@/store/categorySlice'
-import productReducer from '@/store/productSlice'
 import storageSession from 'redux-persist/lib/storage/session'
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+
+import categoryReducer from '@/store/categorySlice'
+import productReducer from '@/store/productSlice'
+import authSlice from '@/store/authSlice'
 
 
 const persistConfig = {
@@ -12,7 +14,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     category: categoryReducer,
-    product: productReducer
+    product: productReducer,
+    auth: authSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,12 +1,17 @@
 import callAxios from "@/service/callApi";
+import { setToken } from "@/store/authSlice";
 import { setCategories } from "@/store/categorySlice";
+import { initialState as initialProductState, setProductFilter } from "@/store/productSlice";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function NavBar() {
     const dispatch = useDispatch()
     const { categories } = useSelector(state => state.category)
+    const { token } = useSelector(state => state.auth)
+    const router = useRouter()
 
     useEffect(() => {
         // Fetch category only if there is no categories in store.
@@ -23,6 +28,15 @@ export default function NavBar() {
         }
     }
 
+    const redirectCategoryProduct = (category) => {
+        dispatch(setProductFilter(initialProductState))
+        router.push(`/${category.title}/products`)
+    }
+
+    const handleLogout = () => {
+        dispatch(setToken(null))
+    }
+
     return (
         <>
             <nav className="bg-gray-800">
@@ -36,12 +50,12 @@ export default function NavBar() {
                         <div
                             className="absolute w-full left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 invisible group-hover:opacity-100 transition duration-500 group-hover:visible">
                             {categories.map((category, id) => (
-                                <a href="#" key={id} className="flex items-center px-4 py-2 hover:bg-red-200 transition">
+                                <button type="button" onClick={() => redirectCategoryProduct(category)} key={id} className="w-full flex items-center px-4 py-2 hover:bg-red-200 transition">
                                     <img src={category.images[0]} alt="sofa" className="w-12 h-8  rounded-md" />
                                     <span className="ml-4 text-gray-600 text-sm font-bold capitalize">
                                         {category.title.replace('-', ' ')}
                                     </span>
-                                </a>
+                                </button>
                             ))}
                             <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
                                 <img src="/assets/images/icons/sofa.svg" alt="sofa" className="w-5 h-5 object-contain" />
@@ -77,9 +91,24 @@ export default function NavBar() {
                             <a href="#" className="text-gray-200 hover:text-white transition">About us</a>
                             <a href="#" className="text-gray-200 hover:text-white transition">Contact us</a>
                         </div>
-                        <Link href={'/login'} className="text-gray-200 hover:text-white transition">
-                            Login
-                        </Link>
+
+                        <div className="space-x-2 flex gap-2">
+                            {token
+                                ? <button type="button" onClick={handleLogout} className="text-primary flex items-center hover:text-white transition">
+                                    <i className="fa fa-power-off mr-2 pt-0.5"></i>
+                                    Logout
+                                </button>
+                                : <>
+                                    <Link href={'/login'} className="text-gray-200 hover:text-white transition">
+                                        Login
+                                    </Link>
+                                    <div className="border border-r border-primary"></div>
+                                    <Link href={'/register'} className="text-primary hover:text-white transition">
+                                        Register
+                                    </Link>
+                                </>
+                            }
+                        </div>
                     </div>
                 </div>
             </nav>

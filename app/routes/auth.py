@@ -11,13 +11,14 @@ from app.lib.utils import (
 )
 from app.models.user_helper import get_user_by_email
 from app.schemas.user import CreateUserSchema, UpdateUser, UserBaseSchema
+from app.logger import logger
 
 router = APIRouter()
 
 
 @router.post("/signin", status_code=status.HTTP_200_OK)
 async def signIn(data: LoginSchema):
-    user = await get_user_by_email(data.email)
+    user = await User.find_one({"email": data.email})
     if not user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -28,8 +29,7 @@ async def signIn(data: LoginSchema):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid credentials."
         )
-
-    return {"status": True, "token": create_token(user["_id"])}
+    return {"success": True, "token": create_token(str(user["_id"]))}
 
 
 @router.get(
@@ -41,6 +41,7 @@ async def signIn(data: LoginSchema):
 async def get_me(user=Depends(get_current_user)):
     return user
 
+
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register(input: SignUpSchema):
     existingUser = await User.find_one({"email": input.email})
@@ -51,7 +52,7 @@ async def register(input: SignUpSchema):
             detail="The email is already exists.",
         )
 
-    if input.password != input.password_confirm:
+    if input.password != input.confirm_password:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Password not matching with confirm password.",
@@ -59,6 +60,7 @@ async def register(input: SignUpSchema):
 
     has_password = hash_password(input.password)
     del input.password
+    del input.confirm_password
     input.password = has_password
     input.created_at = datetime.datetime.utcnow()
     input.updated_at = input.created_at
@@ -74,4 +76,4 @@ async def register(input: SignUpSchema):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Internal server error found.",
         )
-    return {"status": True, "message": "Your account has been created."}
+    return {"success": True, "token": create_token(str(user.inserted_id)), "message": "Your account has been created."}

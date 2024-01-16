@@ -28,18 +28,29 @@ export default function CategorySideFilter() {
         }))
     }
 
+    const clearAllCategories = () => {
+        dispatch(setProductFilter({
+            ...filter,
+            categories: []
+        }))
+    }
+
 
     return (
         <>
             <div className="divide-y divide-gray-200 space-y-5">
                 <div>
-                    <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">Categories</h3>
+                    <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
+                        Categories
+                        {filter.categories?.length > 0 && <small className="text-xs pl-2 text-primary underline cursor-pointer" onClick={clearAllCategories}>Clear all</small>}
+                    </h3>
                     <div className="space-y-2">
                         {categories.map((category, id) => (
                             <div key={id} className="flex items-center">
                                 <input type="checkbox" name={`categories`} id={`category-${category._id}`}
                                     className="text-primary focus:ring-0 rounded-sm cursor-pointer"
-                                    defaultChecked={filter.categories && filter.categories?.includes(category.title)}
+                                    value={category.title}
+                                    checked={filter.categories && filter.categories?.includes(category.title)}
                                     onChange={e => handleSelectCategoryChange(e.target.checked, category.title)}
                                 />
                                 <label htmlFor={`category-${category._id}`} className="text-gray-600 ml-3 cursor-pointer capitalize">
@@ -47,79 +58,55 @@ export default function CategorySideFilter() {
                                 </label>
                             </div>
                         ))}
-                        <div className="flex items-center">
-                            <input type="checkbox" name="cat-1" id="cat-1"
-                                className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="cat-1" className="text-gray-600 ml-3 cursor-pointer">Bedroom</label>
-                            <div className="ml-auto text-gray-600 text-sm">(15)</div>
-                        </div>
-                        <div className="flex items-center">
-                            <input type="checkbox" name="cat-2" id="cat-2"
-                                className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="cat-2" className="text-gray-600 ml-3 cusror-pointer">Sofa</label>
-                            <div className="ml-auto text-gray-600 text-sm">(9)</div>
-                        </div>
-                        <div className="flex items-center">
-                            <input type="checkbox" name="cat-3" id="cat-3"
-                                className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="cat-3" className="text-gray-600 ml-3 cusror-pointer">Office</label>
-                            <div className="ml-auto text-gray-600 text-sm">(21)</div>
-                        </div>
-                        <div className="flex items-center">
-                            <input type="checkbox" name="cat-4" id="cat-4"
-                                className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="cat-4" className="text-gray-600 ml-3 cusror-pointer">Outdoor</label>
-                            <div className="ml-auto text-gray-600 text-sm">(10)</div>
-                        </div>
                     </div>
                 </div>
 
-                <div className="pt-4">
+                {/* <div className="pt-4">
                     <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">Brands</h3>
                     <div className="space-y-2">
                         <div className="flex items-center">
                             <input type="checkbox" name="brand-1" id="brand-1"
                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="brand-1" className="text-gray-600 ml-3 cusror-pointer">Cooking Color</label>
+                            <label htmlFor="brand-1" className="text-gray-600 ml-3 cursor-pointer">Cooking Color</label>
                             <div className="ml-auto text-gray-600 text-sm">(15)</div>
                         </div>
                         <div className="flex items-center">
                             <input type="checkbox" name="brand-2" id="brand-2"
                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="brand-2" className="text-gray-600 ml-3 cusror-pointer">Magniflex</label>
+                            <label htmlFor="brand-2" className="text-gray-600 ml-3 cursor-pointer">Magniflex</label>
                             <div className="ml-auto text-gray-600 text-sm">(9)</div>
                         </div>
                         <div className="flex items-center">
                             <input type="checkbox" name="brand-3" id="brand-3"
                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="brand-3" className="text-gray-600 ml-3 cusror-pointer">Ashley</label>
+                            <label htmlFor="brand-3" className="text-gray-600 ml-3 cursor-pointer">Ashley</label>
                             <div className="ml-auto text-gray-600 text-sm">(21)</div>
                         </div>
                         <div className="flex items-center">
                             <input type="checkbox" name="brand-4" id="brand-4"
                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="brand-4" className="text-gray-600 ml-3 cusror-pointer">M&D</label>
+                            <label htmlFor="brand-4" className="text-gray-600 ml-3 cursor-pointer">M&D</label>
                             <div className="ml-auto text-gray-600 text-sm">(10)</div>
                         </div>
                         <div className="flex items-center">
                             <input type="checkbox" name="brand-5" id="brand-5"
                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
-                            <label htmlFor="brand-5" className="text-gray-600 ml-3 cusror-pointer">Olympic</label>
+                            <label htmlFor="brand-5" className="text-gray-600 ml-3 cursor-pointer">Olympic</label>
                             <div className="ml-auto text-gray-600 text-sm">(10)</div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="pt-4">
                     <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">Price</h3>
                     <div className="mt-4 flex items-center">
                         <input type="text" name="min" id="min"
                             className="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
-                            placeholder="min" />
+                            placeholder="$000" />
                         <span className="mx-3 text-gray-500">-</span>
                         <input type="text" name="max" id="max"
                             className="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
-                            placeholder="max" />
+                            placeholder="$9999" />
                     </div>
                 </div>
 

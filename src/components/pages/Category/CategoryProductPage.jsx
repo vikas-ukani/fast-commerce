@@ -10,20 +10,17 @@ import { useRouter } from 'next/router';
 export default function CategoryProductPage() {
   const dispatch = useDispatch()
   const router = useRouter()
-  const [isGridView, setIsGridView] = useState(false)
+  const [isGridView, setIsGridView] = useState(true)
   const { filter } = useSelector(state => state.product)
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    console.log('router.query.category :>> ', router.query.category);
+    console.log('router.query.category :>> ', router.query.category, filter.categories);
     if (router.query.category) {
-      dispatch(setProductFilter({
-        ...filter,
-        categories: [...filter.categories, router.query.category]
-      }))
+      dispatch(setProductFilter({ ...filter, categories: [router.query.category] }))
       console.log('updating filter :>> ', router.query.category);
     }
-  }, [])
+  }, [router])
 
   useEffect(() => {
     fetchProducts()
@@ -34,7 +31,6 @@ export default function CategoryProductPage() {
       let query = { ...filter }
       if (router.query.category) {
         console.log('asd', router.query.category);
-
         query.category = router.query.category
       }
       const result = '?' + new URLSearchParams(query).toString();
