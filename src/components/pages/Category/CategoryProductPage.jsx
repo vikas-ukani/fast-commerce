@@ -1,10 +1,54 @@
 import CategorySideFilter from '@/components/Category/CategorySideFilter'
-import ProductGrid from '@/components/Category/Products/ProductGrid'
+import ProductGridView from '@/components/Category/Products/ProductGridView'
 import callAxios from '@/service/callApi'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { initialState as initialProductState, setProductFilter, setProducts } from "@/store/productSlice";
+import ProductListView from '@/components/Category/Products/ProductListView'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router';
 
 export default function CategoryProductPage() {
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [isGridView, setIsGridView] = useState(false)
+  const { filter } = useSelector(state => state.product)
+  const [total, setTotal] = useState(0)
+
+  useEffect(() => {
+    console.log('router.query.category :>> ', router.query.category);
+    if (router.query.category) {
+      dispatch(setProductFilter({
+        ...filter,
+        categories: [...filter.categories, router.query.category]
+      }))
+      console.log('updating filter :>> ', router.query.category);
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchProducts()
+  }, [filter])
+
+  const fetchProducts = async () => {
+    try {
+      let query = { ...filter }
+      if (router.query.category) {
+        console.log('asd', router.query.category);
+
+        query.category = router.query.category
+      }
+      const result = '?' + new URLSearchParams(query).toString();
+
+      const URL = `/all-products${result}`
+      const { data } = await callAxios.get(URL)
+      console.log('data :>> ', data);
+      dispatch(setProducts(data.products))
+      setTotal(data.total)
+    } catch (error) {
+      console.log("Error while fetching products::", error)
+      dispatch(setProducts([]))
+    }
+  }
 
   return (
     <>
@@ -41,8 +85,8 @@ export default function CategoryProductPage() {
         </div>
         <div className="col-span-3">
           <div className="flex items-center mb-4">
-            <select name="sort" id="sort" 
-              className="w-44 text-sm text-gray-600 py-3 px-4 border-gray-300 shadow-sm rounded focus:ring-primary focus:border-primary">
+            <select name="sort" id="sort"
+              className="w-60 text-sm text-gray-600 py-3 px-4 border-gray-300 shadow-sm rounded focus:ring-primary focus:border-primary">
               <option value="">Default sorting</option>
               <option value="price-low-to-high">Price low to high</option>
               <option value="price-high-to-low">Price high to low</option>
@@ -55,18 +99,20 @@ export default function CategoryProductPage() {
                 className="block md:hidden border border-primary w-10 h-9 items-center justify-center bg-primary rounded cursor-pointer">
                 <i className="fa-solid fa-filter"></i>
               </button>
-              <div
-                className="border border-primary w-10 h-9 flex items-center justify-center text-white bg-primary rounded cursor-pointer">
+              <button onClick={() => setIsGridView(true)}
+                className={`${isGridView ? 'border-primary bg-primary text-white' : 'border-gray-300 text-gray-600'} border w-10 h-9 flex items-center justify-center rounded cursor-pointer duration-300`}>
                 <i className="fa-solid fa-grip-vertical"></i>
-              </div>
-              <div
-                className="border border-gray-300 w-10 h-9 flex items-center justify-center text-gray-600 rounded cursor-pointer">
+              </button>
+              <button onClick={() => setIsGridView(false)}
+                className={`${!isGridView ? 'border-primary bg-primary text-white' : 'border-gray-300 text-gray-600'} border w-10 h-9 flex items-center justify-center rounded cursor-pointer duration-300`}>
                 <i className="fa-solid fa-list"></i>
-              </div>
+              </button>
             </div>
           </div>
 
-          <ProductGrid />
+          <div className='duration-300'>
+            {isGridView ? <ProductGridView id="product-grid" /> : <ProductListView id="product-list" />}
+          </div>
         </div>
       </div >
 

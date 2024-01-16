@@ -1,6 +1,6 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
-const initialState = {
+export const initialState = {
     products: [],
     filter: {
         categories: [],

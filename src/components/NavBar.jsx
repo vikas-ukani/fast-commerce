@@ -1,6 +1,5 @@
 import callAxios from "@/service/callApi";
 import { setCategories } from "@/store/categorySlice";
-import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,8 +72,8 @@ export default function NavBar() {
 
                     <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
                         <div className="flex items-center space-x-6 capitalize">
-                            <a href="index.html" className="text-gray-200 hover:text-white transition">Home</a>
-                            <a href="pages/shop.html" className="text-gray-200 hover:text-white transition">Shop</a>
+                            <Link href={'/'} className="text-gray-200 hover:text-white transition">Home</Link>
+                            <Link href={'/products'} className="text-gray-200 hover:text-white transition">Shop</Link>
                             <a href="#" className="text-gray-200 hover:text-white transition">About us</a>
                             <a href="#" className="text-gray-200 hover:text-white transition">Contact us</a>
                         </div>
