@@ -40,7 +40,7 @@ class ProductFilterModel(BaseModel):
     search: str | None = None
     title: str | None = None
     category: str | None = None
-    categories: str = None
+    categories: str | None = None
     brand: str | None = None
     # brands: List[str] = []
     min_price: float | None = None
