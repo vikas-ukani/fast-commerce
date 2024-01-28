@@ -100,7 +100,8 @@ export default function LoginPage() {
                 </div>
                 {/* <!-- ./login with --> */}
 
-                <p className="mt-4 text-center text-gray-600">Don't have account?
+                <p className="mt-4 text-center text-gray-600">
+                {"Don't have account?"}
                     <Link href="/register" className="text-primary pl-1 underline">
                         Register now
                     </Link>
