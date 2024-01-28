@@ -3,13 +3,18 @@
 @tailwind utilities;
 
 @layer base {
-  @layer base {
-    :root {
-      /* --color-primary: 255 115 179; */
-      --color-secondary: 111 114 185;
-    }
+
+  /* @layer base { */
+  :root {
+    /* --color-primary: 255 115 179; */
+    --color-secondary: 111 114 185;
   }
 }
+
+.react-multiple-carousel__arrow.react-multiple-carousel__arrow--right, .react-multiple-carousel__arrow.react-multiple-carousel__arrow--left {
+  background-color: rgba(34, 43, 61, 0.5) !important;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {

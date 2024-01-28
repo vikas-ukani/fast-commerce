@@ -2,6 +2,7 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 export const initialState = {
     products: [],
+    isGridView: true,
     filter: {
         categories: [],
         brands: [],
@@ -12,7 +13,7 @@ export const initialState = {
         sort_by: "title",
         descending: false,
         page: 1,
-        limit: 10,
+        limit: 9,
     }
 }
 
@@ -26,9 +27,12 @@ const productSlice = createSlice({
         },
         setProducts: (state, { payload }) => {
             state.products = payload
+        },
+        setIsGridView: (state, { payload }) => {
+            state.isGridView = payload
         }
     }
 })
 
-export const { setProductFilter, setProducts } = productSlice.actions
+export const { setProductFilter, setProducts, setIsGridView } = productSlice.actions
 export default productSlice.reducer

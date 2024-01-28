@@ -2,7 +2,7 @@ import CategorySideFilter from '@/components/Category/CategorySideFilter'
 import ProductGridView from '@/components/Category/Products/ProductGridView'
 import callAxios from '@/service/callApi'
 import React, { useEffect, useState } from 'react'
-import { initialState as initialProductState, setProductFilter, setProducts } from "@/store/productSlice";
+import { initialState as initialProductState, setIsGridView, setProductFilter, setProducts } from "@/store/productSlice";
 import ProductListView from '@/components/Category/Products/ProductListView'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router';
@@ -10,15 +10,12 @@ import { useRouter } from 'next/router';
 export default function CategoryProductPage() {
   const dispatch = useDispatch()
   const router = useRouter()
-  const [isGridView, setIsGridView] = useState(true)
-  const { filter } = useSelector(state => state.product)
+  const { filter, isGridView } = useSelector(state => state.product)
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    console.log('router.query.category :>> ', router.query.category, filter.categories);
     if (router.query.category) {
       dispatch(setProductFilter({ ...filter, categories: [router.query.category] }))
-      console.log('updating filter :>> ', router.query.category);
     }
   }, [router])
 
@@ -95,11 +92,11 @@ export default function CategoryProductPage() {
                 className="block md:hidden border border-primary w-10 h-9 items-center justify-center bg-primary rounded cursor-pointer">
                 <i className="fa-solid fa-filter"></i>
               </button>
-              <button onClick={() => setIsGridView(true)}
+              <button onClick={() => dispatch(setIsGridView(true))}
                 className={`${isGridView ? 'border-primary bg-primary text-white' : 'border-gray-300 text-gray-600'} border w-10 h-9 flex items-center justify-center rounded cursor-pointer duration-300`}>
                 <i className="fa-solid fa-grip-vertical"></i>
               </button>
-              <button onClick={() => setIsGridView(false)}
+              <button onClick={() => dispatch(setIsGridView(false))}
                 className={`${!isGridView ? 'border-primary bg-primary text-white' : 'border-gray-300 text-gray-600'} border w-10 h-9 flex items-center justify-center rounded cursor-pointer duration-300`}>
                 <i className="fa-solid fa-list"></i>
               </button>

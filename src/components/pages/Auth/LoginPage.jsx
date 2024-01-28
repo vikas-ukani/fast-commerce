@@ -48,6 +48,13 @@ export default function LoginPage() {
                 {error.detail && <p className="text-primary mb-6 text-base">{error.detail}</p>}
                 <form method="post" autoComplete="off" onSubmit={handleSubmit}>
                     <div className="space-y-2">
+                        <pre>
+                            <code>
+                                email: vikasukani5@gmail.com
+                                <br />
+                                password: password
+                            </code>
+                        </pre>
                         <div>
                             <label htmlFor="email" className="text-gray-600 mb-2 block">Email address</label>
                             <input type="email" name="email" id="email"
