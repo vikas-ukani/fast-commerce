@@ -1,8 +1,8 @@
 
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 import ReactStars from "react-rating-stars-component";
+import { CardImage } from '../..';
 
 export default function GridItem({ product }) {
 
@@ -13,7 +13,7 @@ export default function GridItem({ product }) {
     return (
         <div className="bg-white h-full shadow border rounded-t-xl overflow-hidden group">
             <div className="relative w-full ">
-                <Image src={product.thumbnail} alt={product.title} className="h-72 w-100 object-contain" loading="lazy"  height={300} width={300} />
+                <CardImage src={product.thumbnail} alt={product.title} />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition duration-500">
                     <Link href={`/products/${product._id}`}
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
@@ -28,7 +28,7 @@ export default function GridItem({ product }) {
                 </div>
             </div>
             <div className='my-auto flex-col gap-2 justify-between relative'>
-                <div className="pt-4 pb-3 px-4 h-full my-auto flex-col gap-2 justify-between">
+                <div className="pt-4 pb-3 px-4 min-h-40 grid grid-flow-row flex-shrink ">
                     <Link href={`/products/${product._id}`}>
                         <h4 className="capitalize font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                             {product.title}
