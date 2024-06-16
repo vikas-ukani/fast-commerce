@@ -14,7 +14,9 @@ export default function LoginPage() {
   const [loginProcess, setLoginProcess] = useState(false);
 
   useEffect(() => {
-    if (token) router.push("/");
+    if (token) {
+      router.push("/");
+    }
     const rememberCred = window.atob(
       localStorage.getItem("login-remember") || ""
     );

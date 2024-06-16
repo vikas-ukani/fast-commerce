@@ -1,9 +1,5 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import IndexPage from '@/components/pages/IndexPage'
-
-const inter = Inter({ subsets: ['latin'] })
+import IndexPage from "@/components/pages/IndexPage";
 
 export default function Home() {
-  return <IndexPage />
+  return <IndexPage />;
 }

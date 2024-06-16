@@ -1,8 +1,5 @@
-
-
-import CategoryProductPage from '@/components/pages/Category/CategoryProductPage'
-import React from 'react'
+import { CategoryProductPage } from "@/components";
 
 export default function CategoryProduct() {
-    return <CategoryProductPage />
+  return <CategoryProductPage />;
 }
