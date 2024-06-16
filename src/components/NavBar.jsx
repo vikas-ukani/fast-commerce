@@ -4,7 +4,7 @@ import { setCategories } from "@/store/categorySlice";
 import { initialState as initialProductState, setProductFilter } from "@/store/productSlice";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function NavBar() {
@@ -40,7 +40,7 @@ export default function NavBar() {
     console.log('router', router)
     return (
         <>
-            <nav className="bg-gray-800">
+            <nav className="bg-gray-800 hidden md:flex flex-auto">
                 <div className="container flex text-sm">
                     <div className="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
                         <span className="text-white">
@@ -88,6 +88,7 @@ export default function NavBar() {
                     </div>
                 </div>
             </nav>
+
         </>
     )
 }
