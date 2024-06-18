@@ -1,9 +1,9 @@
-import useAuth from "@/hooks/useAuth";
 import useCart from "@/hooks/useCart";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import MiniCart from "./Cart/MiniCart";
+import useAuth from "@/hooks/useAuth";
 
 export default function Header() {
   const { token } = useAuth();
