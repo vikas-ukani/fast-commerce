@@ -1,13 +1,31 @@
+import useAuth from "@/hooks/useAuth";
+import useCart from "@/hooks/useCart";
 import Image from "next/image";
 import Link from "next/link";
-// import { FaBarsStaggered } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import MiniCart from "./Cart/MiniCart";
 
 export default function Header() {
+  const { token } = useAuth();
+  const { cartItems, getCartItems } = useCart();
+  const [showMiniCart, setShowMiniCart] = useState(false);
+
+  useEffect(() => {
+    let interval = null;
+    if (token && cartItems.length === 0) {
+      interval = setInterval(async () => {
+        await getCartItems();
+      }, 20000);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [cartItems, token, getCartItems]);
+
   return (
     <header className="py-4 shadow-sm bg-white">
       <div className="container flex items-center justify-between">
         <div className="block md:hidden">
-          {/* <FaBarsStaggered className="h-4 w-6" /> */}
           <i className="fa-solid fa-bars"></i>
         </div>
         <Link href="/">
@@ -40,7 +58,7 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-2 space-x-4">
           <a
             href="#"
             className="text-center text-gray-700 hover:text-primary transition relative"
@@ -53,8 +71,12 @@ export default function Header() {
               8
             </div>
           </a>
-          <a
-            href="#"
+          <Link
+            href="/carts"
+            onClick={(e) => {
+              e.preventDefault();
+              cartItems.length && setShowMiniCart(true);
+            }}
             className="text-center text-gray-700 hover:text-primary transition relative"
           >
             <div className="text-2xl">
@@ -62,18 +84,22 @@ export default function Header() {
             </div>
             <div className="text-xs leading-3">Cart</div>
             <div className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-              2
+              {cartItems.length}
             </div>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <MiniCart
+            showMiniCart={showMiniCart}
+            setShowMiniCart={setShowMiniCart}
+          />
+          <Link
+            href="/account"
             className="text-center text-gray-700 hover:text-primary transition relative"
           >
             <div className="text-2xl">
               <i className="fa-regular fa-user"></i>
             </div>
             <div className="text-xs leading-3">Account</div>
-          </a>
+          </Link>
         </div>
       </div>
     </header>

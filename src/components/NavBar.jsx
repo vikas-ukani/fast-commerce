@@ -1,5 +1,6 @@
 import callAxios from "@/service/callApi";
 import { setToken } from "@/store/authSlice";
+import { setCartItems } from "@/store/cartSlice";
 import { setCategories } from "@/store/categorySlice";
 import {
   initialState as initialProductState,
@@ -39,6 +40,7 @@ export default function NavBar() {
 
   const handleLogout = () => {
     dispatch(setToken(null));
+    dispatch(setCartItems([]));
   };
 
   return (
