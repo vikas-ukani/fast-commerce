@@ -22,7 +22,6 @@ const productSlice = createSlice({
     initialState,
     reducers: {
         setProductFilter: (state, { payload }) => {
-            console.log('payload :>> ', payload);
             state.filter = payload
         },
         setProducts: (state, { payload }) => {
