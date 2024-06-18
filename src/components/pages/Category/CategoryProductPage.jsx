@@ -25,29 +25,28 @@ export default function CategoryProductPage() {
         setProductFilter({ ...filter, categories: [router.query.category] })
       );
     }
-  }, [router]);
+  }, [dispatch, filter, router]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [filter]);
+    async function fetchingProducts() {
+      try {
+        let query = { ...filter };
+        if (router.query.category) {
+          query.category = router.query.category;
+        }
+        const result = "?" + new URLSearchParams(query).toString();
 
-  const fetchProducts = async () => {
-    try {
-      let query = { ...filter };
-      if (router.query.category) {
-        query.category = router.query.category;
+        const URL = `/all-products${result}`;
+        const { data } = await callAxios.get(URL);
+        dispatch(setProducts(data.products));
+        setTotal(data.total);
+      } catch (error) {
+        console.error("Error while fetching products::", error);
+        dispatch(setProducts([]));
       }
-      const result = "?" + new URLSearchParams(query).toString();
-
-      const URL = `/all-products${result}`;
-      const { data } = await callAxios.get(URL);
-      dispatch(setProducts(data.products));
-      setTotal(data.total);
-    } catch (error) {
-      console.error("Error while fetching products::", error);
-      dispatch(setProducts([]));
     }
-  };
+    fetchingProducts();
+  }, [dispatch, filter, router]);
 
   return (
     <>

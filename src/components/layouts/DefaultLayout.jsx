@@ -1,10 +1,10 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import NavBar from "@/components/NavBar";
+import ModelContainer from "@/components/Popup/ModelContainer";
+import LoginCard from "@/components/UI/Card/LoginCard";
 import "react-multi-carousel/lib/styles.css";
 import { useSelector } from "react-redux";
-import Footer from "../Footer";
-import Header from "../Header";
-import NavBar from "../NavBar";
-import ModelContainer from "../Popup/ModelContainer";
-import LoginCard from "../UI/Card/LoginCard";
 
 function DefaultLayout({ children }) {
   const { showLoginPopup, token } = useSelector((state) => state.auth);
