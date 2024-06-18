@@ -20,18 +20,19 @@ export default function NavBar() {
 
   useEffect(() => {
     // Fetch category only if there is no categories in store.
-    if (categories.length == 0) getCategories();
-  }, []);
-
-  const getCategories = async () => {
-    try {
-      let { data } = await callAxios.get("/get-categories");
-      dispatch(setCategories(data));
-    } catch (error) {
-      toast.error(error.message);
-      dispatch(setCategories([]));
+    async function fetchCategory() {
+      if (categories.length == 0) {
+        try {
+          let { data } = await callAxios.get("/get-categories");
+          dispatch(setCategories(data));
+        } catch (error) {
+          toast.error(error.message);
+          dispatch(setCategories([]));
+        }
+      }
     }
-  };
+    fetchCategory();
+  }, [categories, dispatch]);
 
   const redirectCategoryProduct = (category) => {
     dispatch(setProductFilter(initialProductState));
