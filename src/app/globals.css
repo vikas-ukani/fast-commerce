@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "../../public/assets/css/main.css";
+@import "../../public/assets/fontawesome-free/css/all.min.css";
+
+@layer base {
+  /* @layer base { */
+  :root {
+    /* --color-primary: 255 115 179; */
+    --color-secondary: 111 114 185;
+  }
+}
+
+.react-multiple-carousel__arrow.react-multiple-carousel__arrow--right,
+.react-multiple-carousel__arrow.react-multiple-carousel__arrow--left {
+  background-color: rgba(24, 31, 44, 0.5) !important;
+}
+.react-multiple-carousel__arrow.react-multiple-carousel__arrow--left {
+  left: 0;
+}
+.react-multiple-carousel__arrow.react-multiple-carousel__arrow--right {
+  right: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}

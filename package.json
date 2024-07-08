@@ -1,0 +1,41 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.1.0",
+    "@heroicons/react": "^2.1.4",
+    "@reduxjs/toolkit": "^2.2.5",
+    "@tanstack/react-query": "^5.45.1",
+    "@types/react-star-rating-component": "^1.4.4",
+    "axios": "^1.7.2",
+    "heroicons": "^2.1.4",
+    "js-cookie": "^3.0.5",
+    "next": "14.2.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-rating-star-with-type": "^1.2.2",
+    "react-rating-stars-component": "^2.2.0",
+    "react-redux": "^9.1.2",
+    "react-toastify": "^10.0.5",
+    "redux-persist": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "postcss": "^8",
+    "react-multi-carousel": "^2.8.5",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5"
+  }
+}
